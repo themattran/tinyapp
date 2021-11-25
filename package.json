@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/themattran/tinyapp/issues"
   },
-  "homepage": "https://github.com/themattran/tinyapp#readme"
+  "homepage": "https://github.com/themattran/tinyapp#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
