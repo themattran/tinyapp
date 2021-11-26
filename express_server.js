@@ -6,7 +6,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.set("view engine", "ejs"); 
 
-const urlDatabase = {
+let urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
 };
@@ -39,8 +39,22 @@ app.get("/urls/:shortURL", (req, res) => {
 });
 
 app.post("/urls", (req, res) => {
-  console.log(req.body);  // Log the POST request body to the console
-  res.send("Ok");         // Respond with 'Ok' (we will replace this)
+  //console.log(req.body);  // Log the POST request body to the console
+  let longURL = req.body.longURL;
+  let shortURL = generateRandomString(longURL.length);
+  //console.log('long & short', longURL, shortURL);
+  urlDatabase = {...urlDatabase, [shortURL]: longURL} //copy of urlDatabase
+  console.log('urlDatabase', urlDatabase); 
+  res.redirect("/urls");
+});
+
+function generateRandomString(len) {
+  return Math.random().toString(20).substr(2, `${len > 6 ? (len = 6) : (len = 6)}`);
+}
+
+app.get("/u/:shortURL", (req, res) => {
+  const longURL = urlDatabase[req.params.shortURL];
+  res.redirect(longURL);
 });
 
 app.listen(PORT, () => {
